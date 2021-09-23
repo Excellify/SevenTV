@@ -118,13 +118,13 @@ div[id="content"]
 	cursor: pointer !important;
 	display: flex;
 	justify-content: center;
-	width: var(--button-size-default);
-	height: var(--button-size-default);
+	width: var(--button-size-default, var(--yt-icon-width));
+	height: var(--button-size-default, var(--yt-icon-height));
 	position: relative;
 
 	%tooltip {
-		background-color: white;
-		color: #000;
+		background-color: var(--color-text-base, var(--seventv-color-background-0));
+		color: var(--color-text-tooltip, var(--seventv-text-color));
 		text-align: center;		
 		padding: 2px 0;
 		border-radius: 4px;
@@ -134,6 +134,7 @@ div[id="content"]
 		width: 7em;
 		left: 50%;
 		margin-left: -3.5em;
+		z-index: 9999;
 	
 		visibility: hidden;
 		opacity: 0;
@@ -156,7 +157,7 @@ div[id="content"]
 
 		&:after {
 			bottom: 100%;
-			border-color: transparent transparent white transparent;
+			border-color: transparent transparent var(--color-text-base, var(--seventv-color-background-0)) transparent;
 		}
 	}
 
@@ -166,7 +167,7 @@ div[id="content"]
 
 		&:after {
 			top: 100%;
-			border-color: white transparent transparent transparent;
+			border-color: var(--color-text-base, var(--seventv-color-background-0)) transparent transparent transparent;
 		}
 	}
 
@@ -176,28 +177,31 @@ div[id="content"]
 		background-color: var(--color-background-button-text-hover);
 		color: var(--color-fill-button-icon-hover);
 
-		.tooltip-under {
+		%tooltip {
 			visibility: visible;
 			opacity: 1;
 		  }
-		
-		.tooltip-over {
-			visibility: visible;
-			opacity: 1;
-		}
 	}
 
 	button {
 		border: 0;
 		background: transparent;
 		color: white;
-		width: var(--button-size-default);
-		height: var(--button-size-default);
-		text-align: center;
+		width: var(--button-size-default, var(--yt-icon-width));
+		height: var(--button-size-default, var(--yt-icon-height));
+		padding: var(--yt-icon-padding, 0.5rem);
 
 		&:hover {
 			color: var(--color-fill-button-icon-hover);
 		}
+	}
+
+	.logo {
+		background-color: var(--color-fill-button-icon, var(--yt-live-chat-secondary-text-color));
+  		width: 100%;
+  		height: 100%;
+		mask-size: contain;
+  		-webkit-mask-size: contain;
 	}
 }
 

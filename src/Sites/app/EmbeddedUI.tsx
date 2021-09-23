@@ -1,7 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { EmoteMenuButton } from 'src/Sites/app/EmoteMenu/EmoteMenuButton';
-import { SiteApp } from 'src/Sites/app/SiteApp';
+import { SiteApp, configMap } from 'src/Sites/app/SiteApp';
+
 
 export class EmbeddedUI {
 	/**
@@ -9,14 +10,26 @@ export class EmbeddedUI {
 	 */
 	constructor(private app: SiteApp) {}
 
+	initialized = false;
+
 	/**
 	 * Add a button below the chat input box
 	 */
 	embedChatButton(parent: HTMLElement): void {
 		// Add emote list button
 		const buttons = parent;
+		this.initialized = true;
+
 		if (!!buttons && !!buttons.lastChild) {
-			if (buttons.querySelector('.seventv-menu-button')) {
+			const existing = buttons.querySelector('.seventv-menu-button');
+			const enabled = configMap.get('ui.hide_emote_menu')?.asBoolean();
+
+			if ( existing && enabled ){
+				buttons.lastChild.removeChild(existing);
+				return undefined;
+			}
+
+			if ( existing || enabled ){
 				return undefined;
 			}
 
@@ -27,6 +40,12 @@ export class EmbeddedUI {
 			last.insertBefore(container, last.lastChild ?? null);
 
 			ReactDOM.render(<EmoteMenuButton main={this.app.mainComponent} />, container);
+		}
+	}
+
+	refresh(parent: HTMLElement): void {
+		if ( this.initialized ) {
+			this.embedChatButton(parent);
 		}
 	}
 
