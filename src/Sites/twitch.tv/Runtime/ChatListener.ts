@@ -28,15 +28,12 @@ export class TwitchChatListener {
 		// Detect rerenders
 		const listener = this; // Get class context to pass it into the function
 		const x = this.twitch.getChatController().componentDidUpdate; // Get current componentDidUpdate()
-		const isFFZ = this.page.ffzMode;
 
 		if (!this.page.ffzMode) {
-			Logger.Get().warn('ffz mode not enabled');
-			
 			const controller = this.twitch.getChatController();
 			if (!!controller) {
 				controller.componentDidUpdate = function (a, b) {
-					if (isFFZ) {
+					if (listener.page.ffzMode) {
 						return;
 					}
 
