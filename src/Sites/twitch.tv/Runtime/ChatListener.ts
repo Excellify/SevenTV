@@ -31,6 +31,8 @@ export class TwitchChatListener {
 		const isFFZ = this.page.ffzMode;
 
 		if (!this.page.ffzMode) {
+			Logger.Get().warn('ffz mode not enabled');
+			
 			const controller = this.twitch.getChatController();
 			if (!!controller) {
 				controller.componentDidUpdate = function (a, b) {
